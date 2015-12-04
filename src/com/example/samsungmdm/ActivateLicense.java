@@ -1,3 +1,8 @@
+/* 
+ * Данный класс служит для активации ELM и KLM ключей
+ * Был написан не мною, взято с Github 
+ * */
+
 package com.example.samsungmdm;
 
 import android.app.enterprise.license.EnterpriseLicenseManager;
@@ -10,9 +15,6 @@ import android.widget.Toast;
 
 import com.sec.enterprise.knox.license.KnoxEnterpriseLicenseManager;
 
-/**
- * Created by wasiur on 2014-08-12.
- */
 public class ActivateLicense extends BroadcastReceiver {
 
 	//11 December ask for new ELM

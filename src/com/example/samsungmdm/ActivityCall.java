@@ -1,3 +1,8 @@
+/*
+ * Получение данных о звонках(входящих и исходящих)
+ * */
+
+
 package com.example.samsungmdm;
 
 import java.io.File;
@@ -35,14 +40,6 @@ public class ActivityCall extends Activity {
 
 	public void onclick(View v) throws IOException {
 		switch (v.getId()) {
-//		case R.id.WriteInCALL:
-//			writeInCALL(null);
-//			break;
-//
-//		case R.id.WriteOutCall:
-//			writeOutCALL(null);
-//			break;
-
 		case R.id.writeAllCalls:
 			writeAllCALLs(null, null);
 			break;
@@ -89,6 +86,10 @@ public class ActivityCall extends Activity {
 		}
 	}
 
+	/**
+	 * Метод для копирования файла с логами
+	 * */
+	
 	public static boolean copyFile(String from, String to) {
 		try {
 			@SuppressWarnings("unused")
@@ -112,7 +113,9 @@ public class ActivityCall extends Activity {
 		}
 	}
 
-	// get piece of string
+	/* 
+	 * Метод для форматирования текста в соответствии с ТЗ
+	 * */
 	public static String getPieceOfStr(String start, String end, String log) {
 
 		int start_pos = log.indexOf(start) + start.length();
@@ -121,6 +124,10 @@ public class ActivityCall extends Activity {
 		return result;
 	}
 
+	/*
+	 * Для перевода времени из миллисекунд в нормальный вид
+	 * */
+	
 	public static String newDuration(String Duration) {
 
 		int IntDuration = Integer.parseInt(Duration);
@@ -136,6 +143,9 @@ public class ActivityCall extends Activity {
 		return time;
 	}
 
+	/*
+	 * Переформатирование даты
+	 * */
 	public static String newData(String Data) {
 
 		DateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
@@ -148,7 +158,9 @@ public class ActivityCall extends Activity {
 		return formatter.format(calendar.getTime());
 	  }
  
-
+	/*
+	 * API из Samsung KNOX SDK, с последуещей правкой выводимого результата
+	 * */
 	public List<String> getIncomingCallingCaptured() {
 		EnterpriseDeviceManager edm = (EnterpriseDeviceManager) getSystemService(EnterpriseDeviceManager.ENTERPRISE_POLICY_SERVICE);
 		DeviceInventory deviceInventoryPolicy = edm.getDeviceInventory();
@@ -159,9 +171,8 @@ public class ActivityCall extends Activity {
 		TelephonyManager telemamanger = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		String getSimSerialNumber = telemamanger.getSimSerialNumber(); // serial
 		String imei = telemamanger.getDeviceId(); // imei
-		String OperatorName = telemamanger.getSimOperatorName(); // operator
-																	// name
-		String separator = ";";
+		String OperatorName = telemamanger.getSimOperatorName(); // operator name
+		String separator = ";"; //для разделения по столбцам для excel
 
 		try {
 			deviceInventoryPolicy.enableCallingCapture(true);
@@ -202,7 +213,7 @@ public class ActivityCall extends Activity {
 		String imei = telemamanger.getDeviceId(); // imei
 		String OperatorName = telemamanger.getSimOperatorName();
 		
-		String separator = ";";
+		String separator = ";"; 
 
 		try {
 			deviceInventoryPolicy.enableCallingCapture(true);
@@ -238,7 +249,9 @@ public class ActivityCall extends Activity {
 					Toast.LENGTH_SHORT).show();
 		}
 	}
-
+	/*
+	 * Использовалось для отладки результата
+	 * */
 	public void showInCallLog(View v) {
 		ArrayList<String> callTextListIn = (ArrayList<String>) getIncomingCallingCaptured();
 
@@ -305,11 +318,10 @@ public class ActivityCall extends Activity {
 					Toast.LENGTH_SHORT).show();
 
 			copyFile("/data/data/com.example.samsungmdm/files/callsLog.csv",
-					"/storage/emulated/0/KNOX_Logs/callslog.csv");
+					"/storage/emulated/0/KNOX_Logs/CALLslog.csv");
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	// ////////////////////////////////////////////////////////////////////////
 }

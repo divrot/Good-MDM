@@ -11,12 +11,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileOutputStream;
@@ -25,7 +22,6 @@ import java.io.OutputStreamWriter;
 
 public class ActivitySms extends ActivityCall {
 	public static final String TAG = "activitySMS";
-	private TextView textView;
 
 	public void onClick(View v) throws IOException {
 		switch (v.getId()) {
@@ -100,9 +96,6 @@ public class ActivitySms extends ActivityCall {
 			list = deviceInventoryPolicy.getInboundSMSCaptured();
 
 			String separator1 = ";";
-
-			TelephonyManager telemamanger = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-			String imei = telemamanger.getDeviceId(); // imei
 			
 			for (String log : list) {
 				String character = "$";
@@ -113,8 +106,6 @@ public class ActivitySms extends ActivityCall {
 						+  "\ufeff" + getPieceOfStr("Body:", LastElement(newlog), newlog) + separator1 
 						);
 			}
-
-			System.out.print(outlist);
 
 		} catch (SecurityException e) {
 			Log.w(TAG, "SecurityException: " + e);
@@ -130,8 +121,6 @@ public class ActivitySms extends ActivityCall {
 		List<String> outlist = new ArrayList<String>();
 
 		String separator1 = ";";
-		
-		TelephonyManager telemamanger = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
 		try {
 			deviceInventoryPolicy.enableSMSCapture(true);
@@ -184,8 +173,8 @@ public class ActivitySms extends ActivityCall {
 		Collections.sort(AllSMSs_list);
 
 		// add info on top of file
-		AllSMSs_list.add(0, "Time" + separator + "Body" + separator
-				+ "SMS Number" + separator + "Operator");
+		AllSMSs_list.add(0, "Time" + separator + "Status" + separator
+				+ "SMS Number" + separator + "Body");
 
 		try {
 			FileOutputStream fileout = openFileOutput("SMSsLog.csv",

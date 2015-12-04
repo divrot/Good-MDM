@@ -1,3 +1,9 @@
+/*
+ * Демо приложение для демонстрации заказчикам одной из возможностей 
+ * Samsung SDK KNOX.
+ * А именно, сбор данных о звонках и СМС, с помощью специализированного SDK 
+ * */
+
 package com.example.samsungmdm;
 
 import android.app.Activity;
@@ -13,7 +19,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -42,6 +47,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		mEnterpriseDeviceManager = (EnterpriseDeviceManager) getSystemService(EnterpriseDeviceManager.ENTERPRISE_POLICY_SERVICE);
 		mRestrictionPolicy = mEnterpriseDeviceManager.getRestrictionPolicy();
 
+		
+		/*
+		 * Активация ключей
+		 * */
 		mActivateLicenseButton = (Button) findViewById(R.id.activateLicenseButton);
 		mActivateLicenseButton.setOnClickListener((OnClickListener) this);
 

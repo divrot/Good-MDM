@@ -1,3 +1,8 @@
+/*
+ * Отправка файла на сервер
+ * Код не мой(небольшие мои правки) 
+ * */
+
 package com.example.samsungmdm;
 
 import java.io.DataOutputStream;
